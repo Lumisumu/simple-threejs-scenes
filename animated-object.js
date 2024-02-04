@@ -18,8 +18,9 @@ const camera = new THREE.PerspectiveCamera(
 );
 camera.position.z = 5;
 
-const directionalLight = new THREE.DirectionalLight(0xfff, 1);
-const ambientLight = new THREE.AmbientLight(0xfff, 1);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 10);
+const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+directionalLight.position.set(0, 10, 10);
 scene.add(directionalLight, ambientLight);
 
 //Load model and play animation
