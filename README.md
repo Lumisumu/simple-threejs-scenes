@@ -2,7 +2,9 @@
 
 ## Install project and run in web browser
 
-Install to project root:
+Install npm if you don't have it already: https://nodejs.org/
+
+Open cmd, navigate to project root and run installs for ThreeJs and Vite:
 
 ```
 npm install --save three
