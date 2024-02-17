@@ -5,17 +5,17 @@ const loader = new GLTFLoader();
 const scene = new THREE.Scene();
 const clock = new THREE.Clock();
 let mixer = new THREE.AnimationMixer();
-const renderer = new THREE.WebGL1Renderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
 
-//Camera and lights
-const camera = new THREE.PerspectiveCamera(
-  75,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000
-);
+const canvas = document.querySelector("#c");
+const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
+
+const fov = 75;
+const aspect = 2; // the canvas default
+const near = 0.1;
+const far = 5;
+const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+camera.position.z = 2;
+
 camera.position.z = 5;
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 10);
@@ -33,9 +33,31 @@ loader.load("/cube.glb", function (gltf) {
   action.play();
 });
 
+function resizeRendererToDisplaySize(renderer) {
+  const canvas = renderer.domElement;
+  const width = canvas.clientWidth;
+  const height = canvas.clientHeight;
+  const needResize = canvas.width !== width || canvas.height !== height;
+  if (needResize) {
+    renderer.setSize(width, height, false);
+  }
+  return needResize;
+}
+
 //Render loop
 function animate() {
   const delta = clock.getDelta();
+
+  if (resizeRendererToDisplaySize(renderer)) {
+    const canvas = renderer.domElement;
+    camera.aspect = canvas.clientWidth / canvas.clientHeight;
+    camera.updateProjectionMatrix();
+  }
+
+  const canvas = renderer.domElement;
+  camera.aspect = canvas.clientWidth / canvas.clientHeight;
+  camera.updateProjectionMatrix();
+
   mixer.update(delta);
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
