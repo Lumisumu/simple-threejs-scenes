@@ -4,7 +4,7 @@
 
 Install npm if you don't have it already: https://nodejs.org/
 
-Open cmd, navigate to project root and run installs for ThreeJs and Vite:
+Open cmd, navigate to project root and run installs for Three.js and Vite:
 
 ```
 npm install --save three
