@@ -24,11 +24,11 @@ directionalLight.position.set(0, 10, 10);
 scene.add(directionalLight, ambientLight);
 
 //Load model and play animation
-loader.load("/model.glb", function (gltf) {
+loader.load("/cube.glb", function (gltf) {
   scene.add(gltf.scene);
   mixer = new THREE.AnimationMixer(gltf.scene);
   const action = mixer.clipAction(
-    THREE.AnimationClip.findByName(gltf.animations, "animation1")
+    THREE.AnimationClip.findByName(gltf.animations, "Action")
   );
   action.play();
 });
