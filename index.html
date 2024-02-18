@@ -11,24 +11,52 @@
         text-align: center;
         background-color: black;
       }
+      h1 {
+        color: #868686;
+      }
+      table,
+      th,
+      tr,
+      td {
+        padding: 1rem;
+      }
+      table {
+        width: 90%;
+        margin: auto;
+      }
+      td {
+        width: 30%;
+        border: 1px solid white;
+      }
       p {
         text-align: center;
-        padding-top: 1rem;
-        color: #fff;
+        padding-top: 0rem;
+        color: #acacac;
       }
-      #c {
-        width: 100%;
-        height: 100%;
-        display: block;
+      a {
+        color: rgb(132, 132, 255);
       }
     </style>
   </head>
   <body>
-    <a href="scenes/animated-object/animated-object-page.html"
-      >Animated Object</a
-    >
-    <a href="scenes/play-all-animations/play-all-animations-page.html"
-      >Play All Animations</a
-    >
+    <h1>Simple Three.js Scenes</h1>
+
+    <table>
+      <tr>
+        <td>
+          <a href="scenes/animated-object/animated-object-page.html"
+            >Animated Object</a
+          >
+          <p>Play a specific animation clip from one object.</p>
+        </td>
+        <td>
+          <a href="scenes/play-all-animations/play-all-animations-page.html"
+            >Play All Animations</a
+          >
+          <p>Play all animation clips from one object.</p>
+        </td>
+        <td></td>
+      </tr>
+    </table>
   </body>
 </html>
