@@ -24,13 +24,14 @@ directionalLight.position.set(0, 10, 10);
 scene.add(directionalLight, ambientLight);
 
 //Load model and play animation
-loader.load("/scenes/animated-object/cube.glb", function (gltf) {
+loader.load("/scenes/play-all-animations/letters.glb", function (gltf) {
   scene.add(gltf.scene);
   mixer = new THREE.AnimationMixer(gltf.scene);
-  const action = mixer.clipAction(
-    THREE.AnimationClip.findByName(gltf.animations, "Action")
-  );
-  action.play();
+  const clips = gltf.animations;
+
+  clips.forEach(function (clip) {
+    mixer.clipAction(clip).play();
+  });
 });
 
 function resizeRendererToDisplaySize(renderer) {
