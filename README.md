@@ -28,4 +28,6 @@ Animation clip ends to the last keyframe even if end frame far after that. If yo
 
 ## Learning Resources
 
+https://threejs.org/manual/
+
 https://threejs.org/docs/
