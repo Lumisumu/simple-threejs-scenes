@@ -15,20 +15,61 @@ const near = 0.1;
 const far = 10;
 const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 camera.position.z = 5;
+camera.position.y = 1.5;
+camera.rotation.x = -0.3;
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 10);
 const ambientLight = new THREE.AmbientLight(0xffffff, 1);
 directionalLight.position.set(0, 10, 10);
 scene.add(directionalLight, ambientLight);
 
+var model;
+
+//Glass material
+const bowlMaterial = new THREE.MeshPhysicalMaterial({
+  metalness: 0,
+  roughness: 1,
+  envMapIntensity: 0.9,
+  clearcoat: 1,
+  transparent: true,
+  transmission: 0.6,
+  opacity: 0.7,
+  reflectivity: 0.2,
+  color: 0x648682,
+});
+
+//Water material
+const waterMaterial = new THREE.MeshPhysicalMaterial({
+  metalness: 0,
+  roughness: 1,
+  envMapIntensity: 0.9,
+  clearcoat: 1,
+  transparent: true,
+  transmission: 0.6,
+  opacity: 0.7,
+  reflectivity: 0.2,
+  color: 0x94c5ea,
+});
+
 //Load model and play animation
-loader.load("/scenes/animated-object/cube.glb", function (gltf) {
+loader.load("/scenes/transparent-material/mini-beach.glb", function (gltf) {
+  model = gltf.scene;
   scene.add(gltf.scene);
-  mixer = new THREE.AnimationMixer(gltf.scene);
-  const action = mixer.clipAction(
-    THREE.AnimationClip.findByName(gltf.animations, "Action")
-  );
-  action.play();
+
+  const bowlModel = gltf.scene.getObjectByName("Bowl");
+  const waterModel = gltf.scene.getObjectByName("Water");
+
+  bowlModel.traverse((o) => {
+    if (o.isMesh) {
+      o.material = bowlMaterial;
+    }
+  });
+
+  waterModel.traverse((o) => {
+    if (o.isMesh) {
+      o.material = waterMaterial;
+    }
+  });
 });
 
 function resizeRendererToDisplaySize(renderer) {
@@ -44,8 +85,6 @@ function resizeRendererToDisplaySize(renderer) {
 
 //Render loop
 function animate() {
-  const delta = clock.getDelta();
-
   if (resizeRendererToDisplaySize(renderer)) {
     const canvas = renderer.domElement;
     camera.aspect = canvas.clientWidth / canvas.clientHeight;
@@ -56,7 +95,10 @@ function animate() {
   camera.aspect = canvas.clientWidth / canvas.clientHeight;
   camera.updateProjectionMatrix();
 
-  mixer.update(delta);
+  if (model) {
+    model.rotation.y += 0.005;
+  }
+
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
 }
